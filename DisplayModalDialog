@@ -1,0 +1,8 @@
+public void DisplayModalDialog(Page myPage, string FullUrl, bool Centered, bool Resizable, bool WithStatusBar, int dialogLeft, int dialogTop, int WidthPixels, int HeightPixels)
+        {
+            string str = Resizable ? "yes" : "no";
+            string str2 = Centered ? "yes" : "no";
+            string str3 = WithStatusBar ? "yes" : "no";
+            string script = "window.showModalDialog('" + FullUrl + "', '', 'dialogTop:" + dialogTop.ToString() + ";dialogLeft:" + dialogLeft.ToString() + ";dialogHeight:" + HeightPixels.ToString() + "px; dialogWidth:" + WidthPixels.ToString() + "px; status:" + str3 + ";resizable:" + str + "; center:" + str2 + "');";
+            myPage.ClientScript.RegisterClientScriptBlock(base.GetType(), "myPrintPop", script, true);
+        }
