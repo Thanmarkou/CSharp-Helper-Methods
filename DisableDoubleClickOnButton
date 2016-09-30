@@ -1,0 +1,16 @@
+public static void DisableDoubleClickToButton(Page myPage, Button myButton, bool NeedsClientValidation, string ValidationGroup)
+        {
+            string str = myPage.ClientScript.GetPostBackEventReference(myButton, "") + ";this.value='Please wait...';this.disabled = true;";
+            if (NeedsClientValidation)
+            {
+                if (!string.IsNullOrEmpty(ValidationGroup))
+                {
+                    str = "if (Page_ClientValidate('" + ValidationGroup + "')){" + str + "}";
+                }
+                else
+                {
+                    str = "if (Page_ClientValidate()){" + str + "}";
+                }
+            }
+            myButton.Attributes.Add("onclick", str);
+        }
