@@ -16,10 +16,5 @@ public static void CheckFileIntegrity(FileUpload fileuploader)
             if (DocExtention == "exe" || DocExtention == "zip" || DocExtention == "tmp" || DocExtention == "bmp")
             {
                 throw new Exception("Not an expected filetype!");
-            }
-
-            if (AllowedContentTypeJpegTiff(ConType, DocExtention))
-            {
-                throw new Exception("File can't be parsed!");
-            }
+            }           
         }
