@@ -1,0 +1,16 @@
+public static string FTPSendFile(string server, string username, string password, string remotePath, string contents)
+        {
+            string UriString = "ftp://" + server + "/" + remotePath;
+            FtpWebRequest Req = (FtpWebRequest)WebRequest.Create(UriString);
+            Req.Method = WebRequestMethods.Ftp.UploadFile;
+            Req.Credentials = new NetworkCredential(username, password);
+            Req.ContentLength = contents.Length;
+            using (StreamWriter Wr = new StreamWriter(Req.GetRequestStream(), Encoding.GetEncoding(1253)))
+            {
+                Wr.Write(contents);
+            }
+
+            FtpWebResponse Resp = (FtpWebResponse)Req.GetResponse();
+            FtpStatusCode RetCode = Resp.StatusCode;            
+            return Resp.StatusDescription;
+        }
