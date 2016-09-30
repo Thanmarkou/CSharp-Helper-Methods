@@ -1,0 +1,25 @@
+public static void CheckFileIntegrity(FileUpload fileuploader)
+        {
+            if (fileuploader.PostedFile.ContentLength == 0 || !fileuploader.HasFile)
+            {
+                throw new Exception("No file chosen!");
+            }
+
+            if (fileuploader.PostedFile.ContentLength > 1048576)
+            {
+                throw new Exception("You can't upload a file over 1MB!");
+            }
+
+            string DocExtention = fileuploader.FileName.Substring(fileuploader.FileName.LastIndexOf(".") + 1, 3);
+            string ConType = fileuploader.PostedFile.ContentType;
+
+            if (DocExtention == "exe" || DocExtention == "zip" || DocExtention == "tmp" || DocExtention == "bmp")
+            {
+                throw new Exception("Not an expected filetype!");
+            }
+
+            if (AllowedContentTypeJpegTiff(ConType, DocExtention))
+            {
+                throw new Exception("File can't be parsed!");
+            }
+        }
