@@ -1,0 +1,33 @@
+private static string DESDecrypt(string stringToDecrypt, string sEncryptionKey)
+        {
+            byte[] symmetricAlgokey = { };
+            byte[] IV = { 18, 52, 86, 120, 144, 171, 205, 239 };
+            DESCryptoServiceProvider des = new DESCryptoServiceProvider();
+
+            byte[] inputByteArray = new byte[stringToDecrypt.Length + 1];
+            try
+            {
+                symmetricAlgokey = System.Text.Encoding.UTF8.GetBytes(sEncryptionKey.Substring(0, 8));
+
+                inputByteArray = Convert.FromBase64String(stringToDecrypt);
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    using (CryptoStream cs = new CryptoStream(ms, des.CreateDecryptor(symmetricAlgokey, IV), CryptoStreamMode.Write))
+                    {
+                        cs.Write(inputByteArray, 0, inputByteArray.Length);
+                        cs.FlushFinalBlock();
+                        System.Text.Encoding encoding = System.Text.Encoding.UTF8;
+                        return encoding.GetString(ms.ToArray());
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                return e.Message;
+            }
+            finally
+            {
+                des.Clear();
+                symmetricAlgokey = null;
+            }
+        }
