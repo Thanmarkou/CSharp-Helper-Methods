@@ -1,0 +1,6 @@
+public static void myMessageBox(string msg, Page myPage)
+        {            
+            Label lbl = new Label();
+            string msg1 = "<script language='javascript'>window.alert('" + FixErrorMessage4Javascript(msg) + "')</script>";
+            myPage.RegisterClientScriptBlock("message", msg1);
+        }
